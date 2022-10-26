@@ -9,13 +9,17 @@ from selenium.webdriver.common.proxy import Proxy, ProxyType
 import time
 
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
+
 
 
 def logic():
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
-    driver = webdriver.Firefox(executable_path='geckodriver.exe', options=options)
+    driver = webdriver.Firefox(service=Service(executable_path=GeckoDriverManager().install()), options=options)
+
     try:
         if len(proxies) != 0:
             options.add_argument('--proxy-server=%s' % proxies[randrange(0, len(proxies))])
